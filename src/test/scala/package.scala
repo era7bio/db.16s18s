@@ -1,4 +1,4 @@
-package era7bio.db.16s18s
+package era7bio.db.both16s18s
 
 import ohnosequences.fastarious.fasta._
 

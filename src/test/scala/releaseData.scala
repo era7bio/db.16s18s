@@ -1,4 +1,4 @@
-package era7bio.db.16s18s.test
+package era7bio.db.both16s18s.test
 
 import com.amazonaws.services.s3._, transfer._
 import com.amazonaws.auth._
