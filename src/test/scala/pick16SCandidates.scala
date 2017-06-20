@@ -30,16 +30,12 @@ case object pick16SCandidates extends FilterData(
   /* The sequence length threshold for a sequence to be admitted as 16S. */
   val minimum16SLength: Int = 1300
 
-  /* Taxon IDs for *Archaea*, *Bacteria* and the dreaded *Unclassified Bacteria* taxon */
+  /* Taxon IDs for *Eukaryota* *Archaea*, *Bacteria* and the dreaded *Unclassified Bacteria* taxon */
   val bacteriaTaxonID        = "2"
   val archaeaTaxonID         = "2157"
   val unclassifiedBacteriaID = "2323"
+  val eukaryotaTaxonID       + "2759"
 
-  val fishTaxaIDs: Set[String] =
-    Set(
-      "6447", // Mollusca
-      "7776"  // Gnathostomata
-    )
 
   /* These are NCBI taxonomy IDs corresponding to taxa which are at best uniformative. The `String` value is the name of the corresponding taxon, for documentation purposes. */
   val uninformativeTaxIDsMap = Map(
@@ -62,7 +58,9 @@ case object pick16SCandidates extends FilterData(
     86473   -> "uncultured gamma proteobacterium",
     34034   -> "uncultured delta proteobacterium",
     56765   -> "uncultured marine bacterium",
-    115414  -> "uncultured marine alpha proteobacterium"
+    115414  -> "uncultured marine alpha proteobacterium",
+    42452   -> "unclassified eukaryotes ",
+    61964   -> "environmental samples"
   )
 
   lazy val uninformativeTaxIDs: Set[String] = uninformativeTaxIDsMap.keySet.map(_.toString)
@@ -88,8 +86,6 @@ case object pick16SCandidates extends FilterData(
         case None => false // not in the DB
         case Some(ancestors) =>
 
-    /* - is a descendant of one of the fish taxa IDs */
-          ancestors.exists { ancestor => fishTaxaIDs.contains(ancestor.id) } &&
     /* - and is not a descendant of an environmental or unclassified taxon */
           ancestors.filter { ancestor =>
             ancestor.name == "environmental samples" ||
