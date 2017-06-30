@@ -5,7 +5,7 @@
 
   The output of this step represents around `5%` of the sequences in RNACentral.
 */
-package era7bio.db.both16s18s.test
+package era7bio.db.rna16s18s.test
 
 import ohnosequences.db._, csvUtils._, collectionUtils._
 import ohnosequences.db.rnacentral._, RNAcentral._
@@ -18,7 +18,7 @@ import better.files._
 case object pick16SCandidates extends FilterData(
   RNAcentral.table,
   RNAcentral.fasta,
-  era7bio.db.both16s18s.s3prefix
+  era7bio.db.rna16s18s.s3prefix
 )(
   deps = ncbiTaxonomyBundle
 )
@@ -34,7 +34,7 @@ case object pick16SCandidates extends FilterData(
   val bacteriaTaxonID        = "2"
   val archaeaTaxonID         = "2157"
   val unclassifiedBacteriaID = "2323"
-  val eukaryotaTaxonID       + "2759"
+  val eukaryotaTaxonID       = "2759"
 
 
   /* These are NCBI taxonomy IDs corresponding to taxa which are at best uniformative. The `String` value is the name of the corresponding taxon, for documentation purposes. */
@@ -126,7 +126,7 @@ case object pick16SCandidates extends FilterData(
           (Seq[Row](), rows)
         }
 
-      val extendedID: String = s"gnl|${era7bio.db.both16s18s.dbName}|${commonID}"
+      val extendedID: String = s"gnl|${era7bio.db.rna16s18s.dbName}|${commonID}"
 
       writeOutput(
         extendedID,
