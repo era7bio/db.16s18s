@@ -1,4 +1,4 @@
-name          := "db.16s18s"
+name          := "db.rna16s18s"
 organization  := "era7bio"
 description   := "A db for 16S and 18S sequences"
 
