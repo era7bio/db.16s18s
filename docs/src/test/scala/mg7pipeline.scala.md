@@ -1,6 +1,6 @@
 
 ```scala
-package era7bio.db.16s18s.test
+package era7bio.db.rna16s18s.test
 
 import ohnosequences.mg7._, loquats._
 import ohnosequences.datasets._, illumina._
@@ -32,8 +32,8 @@ case object mg7 {
 As the reference database we use the one generated from dropRedundantAssignments
 
 ```scala
-  case object both16s18sRefDB extends ReferenceDB(
-    era7bio.db.16s18s.dbName,
+  case object rna16s18sRefDB extends ReferenceDB(
+    era7bio.db.rna16s18s.dbName,
     dropRedundantAssignmentsAndGenerate.s3,
     dropRedundantAssignments.output.table.s3
   )
@@ -51,7 +51,7 @@ As the reference database we use the one generated from dropRedundantAssignments
       perc_identity(99.0)         ::
       *[AnyDenotation]
     ).value,
-    referenceDBs = Set(peces16sRefDB)
+    referenceDBs = Set(rna16s18sRefDB)
   ) {
 ```
 
@@ -69,9 +69,9 @@ IMPORTANT: exclude the query from the results
   }
 
   case object pipeline extends MG7Pipeline(parameters) {
-    override lazy val name = "db-peces16s"
+    override lazy val name = "db-16s18s"
 
-    val metadata: AnyArtifactMetadata = era7bio.db.generated.metadata.db16s18s
+    val metadata: AnyArtifactMetadata = era7bio.db.generated.metadata.rna16s18s
     // TODO: we should probably have a restricted role for this:
     val iamRoleName: String = "era7-projects"
     val logsS3Prefix: S3Folder = s3"era7-projects-loquats" /
@@ -81,11 +81,11 @@ As input we use the FASTA accepted by dropRedundantAssignments
 
 ```scala
     lazy val inputSamples: Map[ID, S3Resource] = Map(
-      "refdb" -> S3Resource(era7bio.db.16s18s.test.dropRedundantAssignments.output.fasta.s3)
+      "refdb" -> S3Resource(era7bio.db.rna16s18s.test.dropRedundantAssignments.output.fasta.s3)
     )
 
     lazy val outputS3Folder: (SampleID, StepName) => S3Folder = { (_, stepName) =>
-      era7bio.db.16s18s.s3prefix / "mg7" / stepName /
+      era7bio.db.rna16s18s.s3prefix / "mg7" / stepName /
     }
 
     val splitConfig  = SplitConfig(1)
@@ -128,14 +128,14 @@ case object mg7BlastResults extends Bundle() {
 
 
 
+[main/scala/data.scala]: ../../main/scala/data.scala.md
+[main/scala/package.scala]: ../../main/scala/package.scala.md
+[test/scala/clusterSequences.scala]: clusterSequences.scala.md
+[test/scala/compats.scala]: compats.scala.md
+[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/dropRedundantAssignments.scala]: dropRedundantAssignments.scala.md
-[test/scala/runBundles.scala]: runBundles.scala.md
 [test/scala/mg7pipeline.scala]: mg7pipeline.scala.md
 [test/scala/package.scala]: package.scala.md
-[test/scala/compats.scala]: compats.scala.md
-[test/scala/clusterSequences.scala]: clusterSequences.scala.md
-[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/pick16SCandidates.scala]: pick16SCandidates.scala.md
 [test/scala/releaseData.scala]: releaseData.scala.md
-[main/scala/package.scala]: ../../main/scala/package.scala.md
-[main/scala/data.scala]: ../../main/scala/data.scala.md
+[test/scala/runBundles.scala]: runBundles.scala.md

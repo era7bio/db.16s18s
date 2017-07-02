@@ -7,7 +7,7 @@ The output of this step represents around `5%` of the sequences in RNACentral.
 
 
 ```scala
-package era7bio.db.16s18s.test
+package era7bio.db.rna16s18s.test
 
 import ohnosequences.db._, csvUtils._, collectionUtils._
 import ohnosequences.db.rnacentral._, RNAcentral._
@@ -20,7 +20,7 @@ import better.files._
 case object pick16SCandidates extends FilterData(
   RNAcentral.table,
   RNAcentral.fasta,
-  era7bio.db.16s18s.s3prefix
+  era7bio.db.rna16s18s.s3prefix
 )(
   deps = ncbiTaxonomyBundle
 )
@@ -39,18 +39,13 @@ The sequence length threshold for a sequence to be admitted as 16S.
   val minimum16SLength: Int = 1300
 ```
 
-Taxon IDs for *Archaea*, *Bacteria* and the dreaded *Unclassified Bacteria* taxon
+Taxon IDs for *Eukaryota* *Archaea*, *Bacteria* and the dreaded *Unclassified Bacteria* taxon
 
 ```scala
   val bacteriaTaxonID        = "2"
   val archaeaTaxonID         = "2157"
   val unclassifiedBacteriaID = "2323"
-
-  val fishTaxaIDs: Set[String] =
-    Set(
-      "6447", // Mollusca
-      "7776"  // Gnathostomata
-    )
+  val eukaryotaTaxonID       = "2759"
 ```
 
 These are NCBI taxonomy IDs corresponding to taxa which are at best uniformative. The `String` value is the name of the corresponding taxon, for documentation purposes.
@@ -76,7 +71,9 @@ These are NCBI taxonomy IDs corresponding to taxa which are at best uniformative
     86473   -> "uncultured gamma proteobacterium",
     34034   -> "uncultured delta proteobacterium",
     56765   -> "uncultured marine bacterium",
-    115414  -> "uncultured marine alpha proteobacterium"
+    115414  -> "uncultured marine alpha proteobacterium",
+    42452   -> "unclassified eukaryotes ",
+    61964   -> "environmental samples"
   )
 
   lazy val uninformativeTaxIDs: Set[String] = uninformativeTaxIDsMap.keySet.map(_.toString)
@@ -115,12 +112,6 @@ Sequences that satisfy this predicate (on themselves together with their annotat
       taxonomyGraph.getTaxon(taxID).map(_.ancestors) match {
         case None => false // not in the DB
         case Some(ancestors) =>
-```
-
-- is a descendant of one of the fish taxa IDs
-
-```scala
-          ancestors.exists { ancestor => fishTaxaIDs.contains(ancestor.id) } &&
 ```
 
 - and is not a descendant of an environmental or unclassified taxon
@@ -172,7 +163,7 @@ if the sequence is OK, we partition the rows based on the predicate
           (Seq[Row](), rows)
         }
 
-      val extendedID: String = s"gnl|${era7bio.db.16s18s.dbName}|${commonID}"
+      val extendedID: String = s"gnl|${era7bio.db.rna16s18s.dbName}|${commonID}"
 
       writeOutput(
         extendedID,
@@ -189,14 +180,14 @@ if the sequence is OK, we partition the rows based on the predicate
 
 
 
+[main/scala/data.scala]: ../../main/scala/data.scala.md
+[main/scala/package.scala]: ../../main/scala/package.scala.md
+[test/scala/clusterSequences.scala]: clusterSequences.scala.md
+[test/scala/compats.scala]: compats.scala.md
+[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/dropRedundantAssignments.scala]: dropRedundantAssignments.scala.md
-[test/scala/runBundles.scala]: runBundles.scala.md
 [test/scala/mg7pipeline.scala]: mg7pipeline.scala.md
 [test/scala/package.scala]: package.scala.md
-[test/scala/compats.scala]: compats.scala.md
-[test/scala/clusterSequences.scala]: clusterSequences.scala.md
-[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/pick16SCandidates.scala]: pick16SCandidates.scala.md
 [test/scala/releaseData.scala]: releaseData.scala.md
-[main/scala/package.scala]: ../../main/scala/package.scala.md
-[main/scala/data.scala]: ../../main/scala/data.scala.md
+[test/scala/runBundles.scala]: runBundles.scala.md

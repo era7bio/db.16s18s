@@ -9,7 +9,7 @@ The output of this step represents around `70%` of the pick 16S candidates outpu
 
 
 ```scala
-package era7bio.db.16s18s.test
+package era7bio.db.rna16s18s.test
 
 import ohnosequences.db._, csvUtils._, collectionUtils._
 import ohnosequences.fastarious.fasta._
@@ -155,8 +155,8 @@ Returns a pair: contained seq-s and not-contained.
 }
 
 case object dropRedundantAssignmentsAndGenerate extends FilterAndGenerateBlastDB(
-  era7bio.db.16s18s.dbName,
-  era7bio.db.16s18s.test.dropRedundantAssignments
+  era7bio.db.rna16s18s.dbName,
+  era7bio.db.rna16s18s.test.dropRedundantAssignments
 )
 
 ```
@@ -164,14 +164,14 @@ case object dropRedundantAssignmentsAndGenerate extends FilterAndGenerateBlastDB
 
 
 
+[main/scala/data.scala]: ../../main/scala/data.scala.md
+[main/scala/package.scala]: ../../main/scala/package.scala.md
+[test/scala/clusterSequences.scala]: clusterSequences.scala.md
+[test/scala/compats.scala]: compats.scala.md
+[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/dropRedundantAssignments.scala]: dropRedundantAssignments.scala.md
-[test/scala/runBundles.scala]: runBundles.scala.md
 [test/scala/mg7pipeline.scala]: mg7pipeline.scala.md
 [test/scala/package.scala]: package.scala.md
-[test/scala/compats.scala]: compats.scala.md
-[test/scala/clusterSequences.scala]: clusterSequences.scala.md
-[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/pick16SCandidates.scala]: pick16SCandidates.scala.md
 [test/scala/releaseData.scala]: releaseData.scala.md
-[main/scala/package.scala]: ../../main/scala/package.scala.md
-[main/scala/data.scala]: ../../main/scala/data.scala.md
+[test/scala/runBundles.scala]: runBundles.scala.md

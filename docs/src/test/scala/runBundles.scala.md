@@ -1,6 +1,6 @@
 
 ```scala
-package era7bio.db.16s18s.test
+package era7bio.db.rna16s18s.test
 
 import ohnosequences.statika._, aws._
 import ohnosequences.awstools._, regions._, ec2._, autoscaling._, s3._
@@ -31,16 +31,16 @@ case object db16s18s {
   }
 
   def pick16SCandidates(user: AWSUser): Seq[String] =
-    launch(era7bio.db.16s18s.test.compats.pick16SCandidates, r3.`2xlarge`)(user)
+    launch(era7bio.db.rna16s18s.test.compats.pick16SCandidates, r3.`2xlarge`)(user)
 
   def dropRedundantAssignmentsAndGenerate(user: AWSUser): Seq[String] =
-    launch(era7bio.db.16s18s.test.compats.dropRedundantAssignmentsAndGenerate, r3.large)(user)
+    launch(era7bio.db.rna16s18s.test.compats.dropRedundantAssignmentsAndGenerate, r3.large)(user)
 
   def clusterSequences(user: AWSUser): Seq[String] =
-    launch(era7bio.db.16s18s.test.compats.clusterSequences, r3.large)(user)
+    launch(era7bio.db.rna16s18s.test.compats.clusterSequences, r3.large)(user)
 
   def dropInconsistentAssignmentsAndGenerate(user: AWSUser): Seq[String] =
-    launch(era7bio.db.16s18s.test.compats.dropInconsistentAssignmentsAndGenerate, r3.large)(user)
+    launch(era7bio.db.rna16s18s.test.compats.dropInconsistentAssignmentsAndGenerate, r3.large)(user)
 }
 
 ```
@@ -48,14 +48,14 @@ case object db16s18s {
 
 
 
+[main/scala/data.scala]: ../../main/scala/data.scala.md
+[main/scala/package.scala]: ../../main/scala/package.scala.md
+[test/scala/clusterSequences.scala]: clusterSequences.scala.md
+[test/scala/compats.scala]: compats.scala.md
+[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/dropRedundantAssignments.scala]: dropRedundantAssignments.scala.md
-[test/scala/runBundles.scala]: runBundles.scala.md
 [test/scala/mg7pipeline.scala]: mg7pipeline.scala.md
 [test/scala/package.scala]: package.scala.md
-[test/scala/compats.scala]: compats.scala.md
-[test/scala/clusterSequences.scala]: clusterSequences.scala.md
-[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/pick16SCandidates.scala]: pick16SCandidates.scala.md
 [test/scala/releaseData.scala]: releaseData.scala.md
-[main/scala/package.scala]: ../../main/scala/package.scala.md
-[main/scala/data.scala]: ../../main/scala/data.scala.md
+[test/scala/runBundles.scala]: runBundles.scala.md

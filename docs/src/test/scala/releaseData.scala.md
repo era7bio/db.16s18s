@@ -1,6 +1,6 @@
 
 ```scala
-package era7bio.db.16s18s.test
+package era7bio.db.rna16s18s.test
 
 import com.amazonaws.services.s3._, transfer._
 import com.amazonaws.auth._
@@ -28,13 +28,13 @@ This code generates a list of pairs for all objects in the source folder to the 
       .getOrElse(sys.error(s"Couldn't list objects in ${blastdbSource}"))
       .flatMap { obj =>
         obj.key.split('/').lastOption.map { name =>
-          obj -> (db.16s18s.data.blastDBS3 / name)
+          obj -> (db.rna16s18s.data.blastDBS3 / name)
         }
       }
 
     copyData(transferManager)(
-      (dropInconsistentAssignments.output.fasta.s3 -> db.16s18s.data.fastaS3) ::
-      (dropInconsistentAssignments.output.table.s3 -> db.16s18s.data.id2taxasS3) ::
+      (dropInconsistentAssignments.output.fasta.s3 -> db.rna16s18s.data.fastaS3) ::
+      (dropInconsistentAssignments.output.table.s3 -> db.rna16s18s.data.id2taxasS3) ::
       blastdbMap
     )
 
@@ -63,14 +63,14 @@ This code generates a list of pairs for all objects in the source folder to the 
 
 
 
+[main/scala/data.scala]: ../../main/scala/data.scala.md
+[main/scala/package.scala]: ../../main/scala/package.scala.md
+[test/scala/clusterSequences.scala]: clusterSequences.scala.md
+[test/scala/compats.scala]: compats.scala.md
+[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/dropRedundantAssignments.scala]: dropRedundantAssignments.scala.md
-[test/scala/runBundles.scala]: runBundles.scala.md
 [test/scala/mg7pipeline.scala]: mg7pipeline.scala.md
 [test/scala/package.scala]: package.scala.md
-[test/scala/compats.scala]: compats.scala.md
-[test/scala/clusterSequences.scala]: clusterSequences.scala.md
-[test/scala/dropInconsistentAssignments.scala]: dropInconsistentAssignments.scala.md
 [test/scala/pick16SCandidates.scala]: pick16SCandidates.scala.md
 [test/scala/releaseData.scala]: releaseData.scala.md
-[main/scala/package.scala]: ../../main/scala/package.scala.md
-[main/scala/data.scala]: ../../main/scala/data.scala.md
+[test/scala/runBundles.scala]: runBundles.scala.md
