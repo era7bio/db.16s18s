@@ -1,0 +1,3 @@
+First release. This database should contain sequences with both 16S and 18S.
+
+It is a temporary solution; ideally, we should have a db with *only* 18S sequences, and then use both dbs (16S and 18S) whenever needed.
